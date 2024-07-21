@@ -2,6 +2,7 @@ export interface Business {
   _id: string;
   name: string;
   description: string;
+  stars: number;
 }
 
 export interface Review {
