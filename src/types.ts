@@ -10,7 +10,9 @@ export interface Review {
   content: string;
   business: string;
   user: string;
+  stars: number;
   likes: Array<{ userId: string }>;
+  createdAt: Date;
 }
 
 export interface User {
