@@ -44,7 +44,9 @@ const Navbar = () => {
             <DropdownMenuTrigger>
               <Avatar>
                 <AvatarImage src="sfsfd" alt="image" />
-                <AvatarFallback>{loggedInUser.username[0]}</AvatarFallback>
+                <AvatarFallback>
+                  {loggedInUser.username[0].toUpperCase()}
+                </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
