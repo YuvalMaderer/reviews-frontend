@@ -27,6 +27,7 @@ export const dummyReviews: Review[] = [
     content: "Great business!",
     business: "1",
     user: "1",
+    stars: 4,
     likes: [{ userId: "1" }, { userId: "2" }],
   },
   {
@@ -34,6 +35,7 @@ export const dummyReviews: Review[] = [
     content: "Excellent service.",
     business: "1",
     user: "2",
+    stars: 2,
     likes: [{ userId: "3" }],
   },
   {
@@ -41,6 +43,7 @@ export const dummyReviews: Review[] = [
     content: "Will visit again.",
     business: "2",
     user: "1",
+    stars: 5,
     likes: [],
   },
 ];

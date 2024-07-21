@@ -2,7 +2,7 @@ import api from "./api.service";
 import { Review } from "../types";
 
 export function getReviews(businessId: string) {
-  return api.get<Review[]>(`/review?business=${businessId}`);
+  return api.get<Review[]>(`/review/${businessId}`);
 }
 
 export function createReview(review: Review) {
