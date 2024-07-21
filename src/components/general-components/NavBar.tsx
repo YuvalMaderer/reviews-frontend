@@ -1,72 +1,55 @@
-// src/components/Navbar.jsx
+// NavBar.jsx
 
-import { useAuth } from "@/providers/user.context";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import Login from "./Login";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import Register from "./Register";
-import { useNavigate } from "react-router-dom";
+import { Facebook, Github, Linkedin } from "lucide-react";
 
-const Navbar = () => {
-  const { loggedInUser, logout } = useAuth();
-  const Navigate = useNavigate();
-
+const NavBar = () => {
   return (
-    <nav className="bg-gray-800 text-white p-4 flex items-center justify-between">
-      {/* Left Side */}
-      <div className="flex items-center space-x-4">
-        <div className="flex space-x-4">
-          <a href="/" className="hover:text-gray-400">
-            Home
-          </a>
-          <a href="/business" className="hover:text-gray-400">
-            Businesses
-          </a>
-        </div>
+    <nav className="bg-white flex justify-between items-center p-4 px-40">
+      <div className="flex items-center">
+        <img src="/path-to-logo.png" alt="Logo" className="h-10" />
       </div>
-
-      {/* Right Side */}
-      {!loggedInUser ? (
-        <div className="flex space-x-4">
-          <Login />
-          <Register />
-        </div>
-      ) : (
-        <>
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Avatar>
-                <AvatarImage src="sfsfd" alt="image" />
-                <AvatarFallback>
-                  {loggedInUser.username[0].toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => {
-                  logout();
-                  Navigate("/");
-                }}
-              >
-                Logout
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </>
-      )}
+      <div className="flex space-x-4">
+        <a
+          href="/"
+          className="hover:text-red-violet hover:border-b-2 border-red-violet font-bold transition duration-300 ease-in-out"
+        >
+          Home
+        </a>
+        <a
+          href="business"
+          className="hover:text-red-violet hover:border-b-2 border-red-violet font-bold transition duration-300 ease-in-out"
+        >
+          Business
+        </a>
+      </div>
+      <div className="flex space-x-4">
+        <a
+          className="hover:text-red-violet transition duration-300 ease-in-out"
+          href="https://facebook.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Facebook />
+        </a>
+        <a
+          href="https://github.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-red-violet transition duration-300 ease-in-out"
+        >
+          <Github />
+        </a>
+        <a
+          className="hover:text-red-violet transition duration-300 ease-in-out"
+          href="https://linkedin.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Linkedin />
+        </a>
+      </div>
     </nav>
   );
 };
 
-export default Navbar;
+export default NavBar;
