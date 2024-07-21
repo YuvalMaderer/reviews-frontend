@@ -10,8 +10,13 @@ import {
   FC,
 } from "react";
 
+interface User {
+  username: string;
+  email: string;
+}
+
 interface AuthContextType {
-  loggedInUser: object | null | undefined;
+  loggedInUser: User | null | undefined;
   login: (userData: LoginData) => Promise<LoginResponse>;
   register: (userData: RegisterData) => Promise<void>;
   logout: () => void;
@@ -30,7 +35,7 @@ interface RegisterData {
 
 interface LoginResponse {
   token: string;
-  user: object;
+  user: User; // Changed from `object` to `User`
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -40,12 +45,10 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const [loggedInUser, setLoggedInUser] = useState<object | null | undefined>(
+  const [loggedInUser, setLoggedInUser] = useState<User | null | undefined>(
     undefined
   );
   const [token, setToken] = useLocalStorage<string | null>("token", null);
-
-  console.log(loggedInUser);
 
   useEffect(() => {
     if (!token) {
@@ -83,6 +86,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     try {
       const response = await api.post("/auth/login", userData);
       setToken(response.data.token);
+      setLoggedInUser(response.data.user); // Ensure the user is set correctly
       return response.data;
     } catch (error: unknown) {
       console.error("Error logging in:", error);

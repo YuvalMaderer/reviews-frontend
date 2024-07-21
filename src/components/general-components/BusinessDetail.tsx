@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Business, Review } from "src/types";
-import {
-  getReviews,
-  createReview,
-  likeReview,
-} from "src/services/review.service";
 import { AxiosResponse, AxiosError } from "axios";
+import {
+  createReview,
+  getReviews,
+  likeReview,
+} from "@/services/review.service";
 
 interface BusinessDetailProps {
   business: Business;
