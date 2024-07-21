@@ -1,4 +1,5 @@
-import { Business } from "src/types";
+import React from "react";
+import { Business } from "../types";
 
 interface BusinessListProps {
   businesses: Business[];
@@ -14,7 +15,7 @@ function BusinessList(props: BusinessListProps) {
           return (
             <li
               key={business._id}
-              className="p-4 border rounded-lg shadow"
+              className="p-4 border rounded-lg shadow cursor-pointer"
               onClick={() => props.onBusinessClick(business)}
             >
               <h2 className="text-xl font-semibold">{business.name}</h2>
