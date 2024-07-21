@@ -1,5 +1,4 @@
-import React from "react";
-import { Business } from "../types";
+import { Business } from "@/types";
 
 interface BusinessListProps {
   businesses: Business[];

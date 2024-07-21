@@ -72,7 +72,7 @@ function Register() {
 
     try {
       await register(newUser);
-      await login({ email, password });
+      await login({ username, password });
     } catch (error) {
       console.error("Registration or login failed:", error);
     }

@@ -23,7 +23,7 @@ interface AuthContextType {
 }
 
 interface LoginData {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -58,7 +58,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
     async function fetchUser() {
       try {
-        const response = await api.get("/auth/loggedInUser");
+        const response = await api.get("/auth/login");
         setLoggedInUser(response.data);
       } catch (error: unknown) {
         const axiosError = error as AxiosError;

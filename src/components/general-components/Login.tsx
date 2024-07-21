@@ -20,11 +20,11 @@ function Login() {
     const formData = new FormData(form);
 
     const password = formData.get("password") as string | null;
-    const email = formData.get("email") as string | null;
+    const username = formData.get("username") as string | null;
 
-    if (email && password) {
+    if (username && password) {
       try {
-        await login({ email, password });
+        await login({ username, password });
       } catch (error) {
         console.error("Registration or login failed:", error);
       }
@@ -44,13 +44,13 @@ function Login() {
         </DialogHeader>
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="email" className="text-right">
-              Email:
+            <Label htmlFor="username" className="text-right">
+              Username:
             </Label>
             <Input
-              id="email"
-              name="email"
-              type="email"
+              id="username"
+              name="username"
+              type="username"
               placeholder="enter your email here"
               className="col-span-3"
               required
