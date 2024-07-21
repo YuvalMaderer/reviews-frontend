@@ -25,7 +25,7 @@ interface LoginData {
 interface RegisterData {
   email: string;
   password: string;
-  confirmPassword: string;
+  username: string;
 }
 
 interface LoginResponse {
@@ -44,6 +44,8 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     undefined
   );
   const [token, setToken] = useLocalStorage<string | null>("token", null);
+
+  console.log(loggedInUser);
 
   useEffect(() => {
     if (!token) {
