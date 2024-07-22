@@ -1,6 +1,8 @@
 // NavBar.jsx
 
 import { Facebook, Github, Linkedin } from "lucide-react";
+import Login from "./Login";
+import Register from "./Register";
 
 const NavBar = () => {
   return (
@@ -21,6 +23,8 @@ const NavBar = () => {
         >
           Business
         </a>
+        <Login />
+        <Register />
       </div>
       <div className="flex space-x-4">
         <a
