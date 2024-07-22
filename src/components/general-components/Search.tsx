@@ -1,26 +1,38 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Input } from "../ui/input";
+import { Star } from "lucide-react";
 
 interface SearchFormProps {
   categories: string[];
 }
 
+const ratings = [
+  { value: "", label: "Any" },
+  { value: "3", label: "3.0+" },
+  { value: "4", label: "4.0+" },
+  { value: "4.5", label: "4.5+" },
+];
+
 const SearchForm = ({ categories }: SearchFormProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState(searchParams.get("name") || "");
   const [category, setCategory] = useState(searchParams.get("category") || "");
+  const [minRating, setMinRating] = useState(
+    searchParams.get("minRating") || ""
+  );
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       const params: { [key: string]: string } = {};
       if (searchTerm) params.name = searchTerm;
       if (category) params.category = category;
+      if (minRating) params.minRating = minRating;
       setSearchParams(params);
     }, 300); // 300ms debounce delay
 
     return () => clearTimeout(delayDebounceFn);
-  }, [searchTerm, category, setSearchParams]);
+  }, [searchTerm, category, minRating, setSearchParams]);
 
   return (
     <div className="flex gap-4 mb-4 mx-6">
@@ -43,6 +55,22 @@ const SearchForm = ({ categories }: SearchFormProps) => {
           </option>
         ))}
       </select>
+      <div className="flex gap-2">
+        {ratings.map((rating) => (
+          <button
+            key={rating.value}
+            className={`p-2 border rounded ${
+              minRating === rating.value ? "bg-blue-200" : ""
+            }`}
+            onClick={() => setMinRating(rating.value)}
+          >
+            <span className=" flex items-center gap-2">
+              <Star className="h-4 w-4" />
+              {rating.label}
+            </span>
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
