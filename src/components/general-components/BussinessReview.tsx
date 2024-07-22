@@ -1,5 +1,6 @@
 import { Review as ReviewType } from "src/types";
 import StarRating from "./StarRanking";
+import { ThumbsUp } from "lucide-react";
 
 interface ReviewProps {
   review: ReviewType;
@@ -7,10 +8,19 @@ interface ReviewProps {
 
 function Review({ review }: ReviewProps) {
   return (
-    <div className="p-4 border rounded-lg shadow mb-4">
-      <p>
-        <strong>User:</strong> {review.user}
-      </p>
+    <div className="p-4 border rounded-lg shadow mb-4 flex flex-col gap-2">
+      <div className=" flex justify-between items-center">
+        <p>
+          <strong>{review.userFullName}</strong>
+        </p>
+        <div className=" flex items-center gap-2">
+          <div>{review.likes.length}</div>
+          <div>
+            <ThumbsUp />
+          </div>
+        </div>
+      </div>
+
       <p>{review.content}</p>
       <div className="mt-2">
         <StarRating stars={review.stars} readOnly />

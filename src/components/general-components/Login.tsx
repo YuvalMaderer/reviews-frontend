@@ -10,6 +10,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/providers/user.context";
+import Register from "./Register";
+import { useState } from "react";
 
 interface LoginProps {
   isOpen: boolean;
@@ -18,6 +20,7 @@ interface LoginProps {
 
 function Login({ isOpen, onClose }: LoginProps) {
   const { login } = useAuth();
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -32,7 +35,7 @@ function Login({ isOpen, onClose }: LoginProps) {
         await login({ email, password });
         onClose(); // Close the dialog after successful login
       } catch (error) {
-        console.error("Registration or login failed:", error);
+        console.error("Login failed:", error);
       }
     } else {
       console.error("Email and password are required.");
@@ -40,44 +43,61 @@ function Login({ isOpen, onClose }: LoginProps) {
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Login</DialogTitle>
-        </DialogHeader>
-        <form onSubmit={handleSubmit} className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="email" className="text-right">
-              Email:
-            </Label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="enter your email here"
-              className="col-span-3"
-              required
-            />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="password" className="text-right">
-              Password:
-            </Label>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              className="col-span-3"
-              placeholder="enter your password here"
-              required
-            />
-          </div>
-          <DialogFooter>
-            <Button type="submit">Login</Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <>
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Login</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleSubmit} className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="email" className="text-right">
+                Email:
+              </Label>
+              <Input
+                id="email"
+                name="email"
+                type="text"
+                placeholder="Enter your email here"
+                className="col-span-3"
+                required
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="password" className="text-right">
+                Password:
+              </Label>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                className="col-span-3"
+                placeholder="Enter your password here"
+                required
+              />
+            </div>
+            <DialogFooter>
+              <div className="text-center mt-4 flex justify-between">
+                <div className=" text-start">
+                  <span>Not a member? </span>
+                  <Button
+                    variant="link"
+                    onClick={() => setIsRegisterOpen(true)}
+                  >
+                    Register
+                  </Button>
+                </div>
+                <Button type="submit">Login</Button>
+              </div>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+      <Register
+        isOpen={isRegisterOpen}
+        onClose={() => setIsRegisterOpen(false)}
+      />
+    </>
   );
 }
 

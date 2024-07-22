@@ -5,6 +5,8 @@ import { Button } from "../ui/button";
 import BussinessReview from "./BussinessReview";
 import { getReviews } from "@/services/review.service";
 import ReviewForm from "./ReviewCreationForm";
+import { useAuth } from "@/providers/user.context";
+import Login from "./Login";
 
 interface BusinessDialogProps {
   business: Business;
@@ -14,16 +16,18 @@ interface BusinessDialogProps {
 
 function BusinessDialog({ business, isOpen, onClose }: BusinessDialogProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
+  const { loggedInUser } = useAuth();
   const [isAddingReview, setIsAddingReview] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [reviews, setReviews] = useState<Review[]>([]);
 
   useEffect(() => {
     async function fetchReviews() {
       try {
         const response = await getReviews(business._id);
+        const reviews: Review[] = response.data.reviews;
         console.log(response);
-
-        setReviews(response.data.reviews);
+        setReviews(reviews);
       } catch (error) {
         console.error("Error fetching reviews:", error);
       }
@@ -56,7 +60,11 @@ function BusinessDialog({ business, isOpen, onClose }: BusinessDialogProps) {
   }, [isOpen, onClose]);
 
   function handleAddReview() {
-    setIsAddingReview(true);
+    if (!loggedInUser) {
+      setIsLoginOpen(true);
+    } else {
+      setIsAddingReview(true);
+    }
   }
 
   function handleReviewCreated(newReview: Review) {
@@ -74,7 +82,7 @@ function BusinessDialog({ business, isOpen, onClose }: BusinessDialogProps) {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
       <div
         ref={dialogRef}
-        className="bg-white p-4 rounded-lg shadow-lg w-full max-w-md relative overflow-y-auto max-h-screen"
+        className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md relative overflow-y-auto max-h-[90vh]"
       >
         <button className="absolute top-2 right-2" onClick={onClose}>
           X
@@ -85,22 +93,27 @@ function BusinessDialog({ business, isOpen, onClose }: BusinessDialogProps) {
           <StarRating stars={business.stars} readOnly />
         </div>
         <div className="mt-4">
-          <h3 className="text-xl font-semibold">Reviews</h3>
+          <div className=" flex justify-between items-center">
+            <h3 className="text-xl font-semibold">Reviews</h3>
+            <Button className="mt-4" onClick={handleAddReview}>
+              Add Review
+            </Button>
+          </div>
+          {isAddingReview && (
+            <div className="mt-4">
+              <ReviewForm
+                businessId={business._id}
+                onReviewCreated={handleReviewCreated}
+                onCancel={handleCancelReview}
+              />
+            </div>
+          )}
           {reviews.map((review) => (
             <BussinessReview key={review._id} review={review} />
           ))}
         </div>
-        {!isAddingReview ? (
-          <Button className="mt-4" onClick={handleAddReview}>
-            Add Review
-          </Button>
-        ) : (
-          <ReviewForm
-            businessId={business._id}
-            onReviewCreated={handleReviewCreated}
-            onCancel={handleCancelReview}
-          />
-        )}
+
+        <Login isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
       </div>
     </div>
   );

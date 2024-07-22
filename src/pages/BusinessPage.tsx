@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getBusinesses } from "../services/business.service";
 import { Business } from "../types";
 import BusinessDialog from "../components/general-components/BusinessDialog";
