@@ -5,13 +5,13 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/providers/user.context";
 import Register from "./Register";
 import { useState } from "react";
+import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
 
 interface LoginProps {
   isOpen: boolean;
@@ -19,7 +19,7 @@ interface LoginProps {
 }
 
 function Login({ isOpen, onClose }: LoginProps) {
-  const { login } = useAuth();
+  const { login, handleGoogleSuccess } = useAuth();
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -49,6 +49,28 @@ function Login({ isOpen, onClose }: LoginProps) {
           <DialogHeader>
             <DialogTitle>Login</DialogTitle>
           </DialogHeader>
+          <div className=" flex flex-col text-center align-middle items-center">
+            <GoogleLogin
+              onSuccess={async (credentialResponse: CredentialResponse) => {
+                if (credentialResponse.credential) {
+                  try {
+                    await handleGoogleSuccess({
+                      credential: credentialResponse.credential,
+                    });
+                    onClose(); // Close the dialog after successful login
+                  } catch (error) {
+                    console.error("Google login failed:", error);
+                  }
+                } else {
+                  console.error("Google credential is undefined");
+                }
+              }}
+              onError={() => {
+                console.error("Error working with Google");
+              }}
+            />
+            <span className="mt-4">OR</span>
+          </div>
           <form onSubmit={handleSubmit} className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="email" className="text-right">
@@ -78,7 +100,7 @@ function Login({ isOpen, onClose }: LoginProps) {
             </div>
             <DialogFooter>
               <div className="text-center mt-4 flex justify-between">
-                <div className=" text-start">
+                <div className="text-start">
                   <span>Not a member? </span>
                   <Button
                     variant="link"
