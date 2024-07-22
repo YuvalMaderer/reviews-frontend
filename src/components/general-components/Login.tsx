@@ -5,14 +5,22 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/providers/user.context";
+import Register from "./Register";
+import { useState } from "react";
+import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
 
-function Login() {
-  const { login } = useAuth();
+interface LoginProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+function Login({ isOpen, onClose }: LoginProps) {
+  const { login, handleGoogleSuccess } = useAuth();
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -20,13 +28,14 @@ function Login() {
     const formData = new FormData(form);
 
     const password = formData.get("password") as string | null;
-    const username = formData.get("username") as string | null;
+    const email = formData.get("email") as string | null;
 
-    if (username && password) {
+    if (email && password) {
       try {
-        await login({ username, password });
+        await login({ email, password });
+        onClose(); // Close the dialog after successful login
       } catch (error) {
-        console.error("Registration or login failed:", error);
+        console.error("Login failed:", error);
       }
     } else {
       console.error("Email and password are required.");
@@ -34,47 +43,83 @@ function Login() {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">Login</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Login</DialogTitle>
-        </DialogHeader>
-        <form onSubmit={handleSubmit} className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username:
-            </Label>
-            <Input
-              id="username"
-              name="username"
-              type="username"
-              placeholder="enter your email here"
-              className="col-span-3"
-              required
+    <>
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Login</DialogTitle>
+          </DialogHeader>
+          <div className=" flex flex-col text-center align-middle items-center">
+            <GoogleLogin
+              onSuccess={async (credentialResponse: CredentialResponse) => {
+                if (credentialResponse.credential) {
+                  try {
+                    await handleGoogleSuccess({
+                      credential: credentialResponse.credential,
+                    });
+                    onClose(); // Close the dialog after successful login
+                  } catch (error) {
+                    console.error("Google login failed:", error);
+                  }
+                } else {
+                  console.error("Google credential is undefined");
+                }
+              }}
+              onError={() => {
+                console.error("Error working with Google");
+              }}
             />
+            <span className="mt-4">OR</span>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="password" className="text-right">
-              Password:
-            </Label>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              className="col-span-3"
-              placeholder="enter your password here"
-              required
-            />
-          </div>
-          <DialogFooter>
-            <Button type="submit">Login</Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+          <form onSubmit={handleSubmit} className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="email" className="text-right">
+                Email:
+              </Label>
+              <Input
+                id="email"
+                name="email"
+                type="text"
+                placeholder="Enter your email here"
+                className="col-span-3"
+                required
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="password" className="text-right">
+                Password:
+              </Label>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                className="col-span-3"
+                placeholder="Enter your password here"
+                required
+              />
+            </div>
+            <DialogFooter>
+              <div className="text-center mt-4 flex justify-between">
+                <div className="text-start">
+                  <span>Not a member? </span>
+                  <Button
+                    variant="link"
+                    onClick={() => setIsRegisterOpen(true)}
+                  >
+                    Register
+                  </Button>
+                </div>
+                <Button type="submit">Login</Button>
+              </div>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+      <Register
+        isOpen={isRegisterOpen}
+        onClose={() => setIsRegisterOpen(false)}
+      />
+    </>
   );
 }
 

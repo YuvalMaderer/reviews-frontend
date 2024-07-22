@@ -5,8 +5,8 @@ export function getReviews(businessId: string) {
   return api.get<Review[]>(`/review/${businessId}`);
 }
 
-export function createReview(review: Review) {
-  return api.post<Review>("/review", review);
+export function createReview(businessId: string, review: Partial<Review>) {
+  return api.post<Review>(`/review/${businessId}`, review);
 }
 
 export function updateReview(reviewId: string, review: Partial<Review>) {

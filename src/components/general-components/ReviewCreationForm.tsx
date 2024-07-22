@@ -1,6 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Review } from "src/types";
-import StarRating from "./StarRanking";
+import StarRating from ".//StarRanking";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import { createReview } from "@/services/review.service";
@@ -36,7 +36,7 @@ function ReviewForm({
         createdAt: new Date(),
       };
 
-      const response = await createReview(newReview as Review);
+      const response = await createReview(businessId, newReview);
       onReviewCreated(response.data);
       setContent("");
       setStars(0);

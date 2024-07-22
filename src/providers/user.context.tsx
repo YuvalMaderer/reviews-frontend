@@ -11,7 +11,7 @@ import {
 } from "react";
 
 interface User {
-  username: string;
+  fullName: string;
   email: string;
 }
 
@@ -20,17 +20,20 @@ interface AuthContextType {
   login: (userData: LoginData) => Promise<LoginResponse>;
   register: (userData: RegisterData) => Promise<void>;
   logout: () => void;
+  handleGoogleSuccess: (credentialResponse: {
+    credential: string;
+  }) => Promise<void>;
 }
 
 interface LoginData {
-  username: string;
+  email: string;
   password: string;
 }
 
 interface RegisterData {
   email: string;
   password: string;
-  username: string;
+  fullName: string;
 }
 
 interface LoginResponse {
@@ -102,9 +105,28 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       throw error;
     }
   };
+  const handleGoogleSuccess = async (credentialResponse: {
+    credential?: string;
+  }): Promise<void> => {
+    const { credential } = credentialResponse;
+    if (!credential) {
+      console.error("Credential is undefined");
+      return;
+    }
+    try {
+      const response = await api.post("/auth/google", { credential });
+      setToken(response.data.token);
+      setLoggedInUser(response.data.user);
+      console.log("Logged in with Google");
+    } catch (error: unknown) {
+      console.error("Google login failed:", error);
+    }
+  };
 
   return (
-    <AuthContext.Provider value={{ loggedInUser, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ loggedInUser, login, register, logout, handleGoogleSuccess }}
+    >
       {children}
     </AuthContext.Provider>
   );

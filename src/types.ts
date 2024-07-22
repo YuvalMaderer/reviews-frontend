@@ -1,4 +1,5 @@
 export interface Business {
+  category: string;
   _id: string;
   name: string;
   description: string;
@@ -10,6 +11,7 @@ export interface Review {
   content: string;
   business: string;
   user: string;
+  userFullName: string;
   stars: number;
   likes: Array<{ userId: string }>;
   createdAt: Date;

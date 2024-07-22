@@ -11,11 +11,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/providers/user.context";
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 
-function Register() {
+interface RegisterProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+function Register({ isOpen, onClose }: RegisterProps) {
   const [password, setPassword] = useState("");
   const [passwordStrength, setPasswordStrength] = useState("");
-  const { login, register } = useAuth();
+  const { login, register, handleGoogleSuccess } = useAuth();
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = e.target.value;
@@ -55,49 +61,69 @@ function Register() {
     const form = e.currentTarget as HTMLFormElement;
     const formData = new FormData(form);
 
-    const username = formData.get("username") as string | null;
+    const fullName = formData.get("fullName") as string | null;
     const password = formData.get("password") as string | null;
     const email = formData.get("email") as string | null;
 
-    if (!username || !password || !email) {
+    if (!fullName || !password || !email) {
       console.error("Missing form data");
       return;
     }
 
     const newUser = {
-      username,
+      fullName,
       password,
       email,
     };
 
     try {
       await register(newUser);
-      await login({ username, password });
+      await login({ email, password });
+      onClose(); // Close the dialog after successful registration and login
     } catch (error) {
       console.error("Registration or login failed:", error);
     }
   }
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">Register</Button>
-      </DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Register</DialogTitle>
         </DialogHeader>
+        <div className=" flex flex-col text-center align-middle items-center">
+          <GoogleLogin
+            onSuccess={async (credentialResponse: CredentialResponse) => {
+              if (credentialResponse.credential) {
+                try {
+                  await handleGoogleSuccess({
+                    credential: credentialResponse.credential,
+                  });
+                  onClose(); // Close the dialog after successful login
+                } catch (error) {
+                  console.error("Google login failed:", error);
+                }
+              } else {
+                console.error("Google credential is undefined");
+              }
+            }}
+            onError={() => {
+              console.error("Error working with Google");
+            }}
+          />
+          <span className="mt-4">OR</span>
+        </div>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
-                Username:
+              <Label htmlFor="fullName" className="text-right">
+                Full Name:
               </Label>
               <Input
-                id="username"
-                name="username"
+                id="fullName"
+                name="fullName"
                 type="text"
-                placeholder="Enter your username here"
+                placeholder="Enter your full name here"
                 className="col-span-3"
                 required
               />
