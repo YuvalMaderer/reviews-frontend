@@ -1,5 +1,19 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Facebook, Github, Linkedin } from "lucide-react";
+import { useAuth } from "@/providers/user.context";
+import Login from "./Login";
+import Register from "./Register";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Link } from "react-router-dom";
+import { Button } from "../ui/button";
 
 const NavBar = () => {
   const { loggedInUser, logout } = useAuth();
