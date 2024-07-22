@@ -16,6 +16,7 @@ function BusinessPage() {
   const [searchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [totalBusinesses, setTotalBusinesses] = useState(0);
   const businessesPerPage = 10;
 
   useEffect(() => {
@@ -26,6 +27,7 @@ function BusinessPage() {
         const category = searchParams.get("category") || "";
         const response = await getBusinesses(currentPage, name, category);
         setBusinesses(response.data.business);
+        setTotalBusinesses(response.data.totalBusinesses);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching businesses:", error);
@@ -58,41 +60,37 @@ function BusinessPage() {
     new Set(businesses.map((business) => business.category))
   );
 
-  const indexOfLastBusiness = currentPage * businessesPerPage;
-  const indexOfFirstBusiness = indexOfLastBusiness - businessesPerPage;
-  const currentBusinesses = businesses.slice(
-    indexOfFirstBusiness,
-    indexOfLastBusiness
-  );
-
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-4">Business Page</h1>
+    <div className="m-16">
+      <h1 className="text-3xl font-bold my-4 text-center">Business Page</h1>
       <SearchForm categories={categories} />
       {isLoading ? (
         <div>Loading...</div>
       ) : (
         <div className="flex flex-col gap-8 p-8">
-          {currentBusinesses.map((business) => (
+          {businesses.map((business) => (
             <div
               key={business._id}
-              className="p-4 border rounded-lg shadow cursor-pointer"
+              className="p-6 border rounded-lg shadow cursor-pointer flex flex-col gap-2"
               onClick={() => handleBusinessClick(business)}
             >
-              <h2 className="text-xl font-semibold">{business.name}</h2>
-              <p className="mt-2">{business.description}</p>
-              <div className="mt-2">
-                <StarRating stars={business.stars} readOnly />
+              <div className="flex justify-between">
+                <h2 className="text-xl font-semibold">{business.name}</h2>
+                <div>
+                  <StarRating stars={business.stars} readOnly />
+                </div>
               </div>
+              <div> {business.category}</div>
+              <p>{business.description}</p>
             </div>
           ))}
         </div>
       )}
       <Pagination
         businessesPerPage={businessesPerPage}
-        totalBusinesses={businesses.length}
+        totalBusinesses={totalBusinesses}
         paginate={paginate}
         currentPage={currentPage}
       />

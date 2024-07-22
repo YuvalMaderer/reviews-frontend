@@ -36,6 +36,7 @@ function StarRating({ stars, onChange, readOnly = false }: StarRatingProps) {
     <div className="flex items-center">
       {Array.from({ length: fullStars }).map((_, index) => (
         <Star
+          height={20}
           key={index}
           className={`text-yellow-500 ${!readOnly ? "cursor-pointer" : ""}`}
           fill="currentColor"
