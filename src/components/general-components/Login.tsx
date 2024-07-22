@@ -11,7 +11,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/providers/user.context";
 
-function Login() {
+interface LoginProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+function Login({ isOpen, onClose }: LoginProps) {
   const { login } = useAuth();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -20,11 +25,12 @@ function Login() {
     const formData = new FormData(form);
 
     const password = formData.get("password") as string | null;
-    const username = formData.get("username") as string | null;
+    const email = formData.get("email") as string | null;
 
-    if (username && password) {
+    if (email && password) {
       try {
-        await login({ username, password });
+        await login({ email, password });
+        onClose(); // Close the dialog after successful login
       } catch (error) {
         console.error("Registration or login failed:", error);
       }
@@ -34,23 +40,20 @@ function Login() {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">Login</Button>
-      </DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Login</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username:
+            <Label htmlFor="email" className="text-right">
+              Email:
             </Label>
             <Input
-              id="username"
-              name="username"
-              type="username"
+              id="email"
+              name="email"
+              type="email"
               placeholder="enter your email here"
               className="col-span-3"
               required

@@ -21,7 +21,9 @@ function BusinessDialog({ business, isOpen, onClose }: BusinessDialogProps) {
     async function fetchReviews() {
       try {
         const response = await getReviews(business._id);
-        setReviews(response.data);
+        console.log(response);
+
+        setReviews(response.data.reviews);
       } catch (error) {
         console.error("Error fetching reviews:", error);
       }

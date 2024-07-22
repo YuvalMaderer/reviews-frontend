@@ -11,7 +11,7 @@ import {
 } from "react";
 
 interface User {
-  username: string;
+  fullName: string;
   email: string;
 }
 
@@ -23,14 +23,14 @@ interface AuthContextType {
 }
 
 interface LoginData {
-  username: string;
+  email: string;
   password: string;
 }
 
 interface RegisterData {
   email: string;
   password: string;
-  username: string;
+  fullName: string;
 }
 
 interface LoginResponse {
