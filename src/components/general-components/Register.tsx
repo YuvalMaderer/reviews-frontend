@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/providers/user.context";
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 
 interface RegisterProps {
   isOpen: boolean;
@@ -20,7 +21,7 @@ interface RegisterProps {
 function Register({ isOpen, onClose }: RegisterProps) {
   const [password, setPassword] = useState("");
   const [passwordStrength, setPasswordStrength] = useState("");
-  const { login, register } = useAuth();
+  const { login, register, handleGoogleSuccess } = useAuth();
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = e.target.value;
@@ -90,6 +91,28 @@ function Register({ isOpen, onClose }: RegisterProps) {
         <DialogHeader>
           <DialogTitle>Register</DialogTitle>
         </DialogHeader>
+        <div className=" flex flex-col text-center align-middle items-center">
+          <GoogleLogin
+            onSuccess={async (credentialResponse: CredentialResponse) => {
+              if (credentialResponse.credential) {
+                try {
+                  await handleGoogleSuccess({
+                    credential: credentialResponse.credential,
+                  });
+                  onClose(); // Close the dialog after successful login
+                } catch (error) {
+                  console.error("Google login failed:", error);
+                }
+              } else {
+                console.error("Google credential is undefined");
+              }
+            }}
+            onError={() => {
+              console.error("Error working with Google");
+            }}
+          />
+          <span className="mt-4">OR</span>
+        </div>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
