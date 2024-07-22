@@ -6,7 +6,6 @@ import StarRating from "../components/general-components/StarRanking";
 import SearchForm from "../components/general-components/Search";
 import { useSearchParams } from "react-router-dom";
 import Pagination from "../components/general-components/Pagination";
-
 function BusinessPage() {
   const [businesses, setBusinesses] = useState<Business[]>([]);
   const [selectedBusiness, setSelectedBusiness] = useState<Business | null>(
@@ -25,7 +24,13 @@ function BusinessPage() {
         setIsLoading(true);
         const name = searchParams.get("name") || "";
         const category = searchParams.get("category") || "";
-        const response = await getBusinesses(currentPage, name, category);
+        const minRating = searchParams.get("minRating") || "";
+        const response = await getBusinesses(
+          currentPage,
+          name,
+          category,
+          minRating
+        );
         setBusinesses(response.data.business);
         setTotalBusinesses(response.data.totalBusinesses);
         setIsLoading(false);
@@ -69,7 +74,7 @@ function BusinessPage() {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <div className="flex flex-col gap-8 p-8">
+        <div className="grid grid-cols-1 gap-8 p-8 md:grid-cols-2">
           {businesses.map((business) => (
             <div
               key={business._id}
@@ -82,8 +87,8 @@ function BusinessPage() {
                   <StarRating stars={business.stars} readOnly />
                 </div>
               </div>
-              <div> {business.category}</div>
-              <p>{business.description}</p>
+              <div className="text-sm text-gray-500">{business.category}</div>
+              <p className="text-gray-700">{business.description}</p>
             </div>
           ))}
         </div>
