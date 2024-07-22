@@ -1,3 +1,4 @@
+import { Input } from "@/components/ui/input";
 import {
   AlarmClock,
   BarChart3,
@@ -6,7 +7,14 @@ import {
   Laptop,
   Layers,
   Rocket,
+  Send,
 } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const Homepage = () => {
   return (
@@ -69,7 +77,7 @@ const Homepage = () => {
         ))}
       </div>
       <div className="flex flex-col justify-center items-center p-4 md:p-8">
-        <h1 className="text-4xl md:text-6xl font-bold mb-4 md:mb-6">
+        <h1 className="text-4xl md:text-6xl font-bold mb-4 md:mb-6 text-teal-600">
           SOMETHING NEW
         </h1>
         <hr className="w-32 md:w-40 border-t border-black mb-4 md:mb-6" />
@@ -142,6 +150,107 @@ const Homepage = () => {
           <p className="text-sm text-gray-200">
             Monitor and respond to business performance.
           </p>
+        </div>
+      </div>
+      <div className="bg-[#333333] w-full p-12 pl-60 flex gap-10">
+        <div>
+          <p className="text-white text-bold text-4xl font-bold pb-5">
+            Subscribe on <span className="text-teal-500">Our News</span>
+          </p>
+          <p className="text-gray-300 text-xs">
+            Subscribe to our newsletter for the latest reviews and updates.
+          </p>
+        </div>
+        <div className="flex justify-center items-center">
+          <Input
+            className=" bg-transparent border-white text-white w-[35rem] mr-3"
+            placeholder="Your Email"
+            type="email"
+          />
+          <Send className="text-white cursor-pointer" />
+        </div>
+      </div>
+      <div className="flex items-center justify-center gap-20">
+        <img
+          src="src/images/Screenshot 2024-07-22 145736.png"
+          alt=""
+          className="w-[500px]"
+        />
+        <div>
+          <h1 className="text-5xl font-bold max-w-96 text-teal-700 mb-6">
+            CLEAR YOUR MIND & DO RIGHT CHOICE
+          </h1>
+          <hr className="w-32 md:w-40 border-t border-black mb-4 md:mb-6" />
+          <p className="text-gray-400 text-xs max-w-96">
+            Clear Your Mind & Make the Right Choice" encourages mental clarity
+            to make informed, positive decisions by eliminating distractions and
+            focusing on what matters.
+          </p>
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="item-1">
+              <AccordionTrigger>
+                How can I leave a review for a product?
+              </AccordionTrigger>
+              <AccordionContent className="max-w-96">
+                To leave a review, navigate to the product page, scroll down to
+                the reviews section, and click on the "Write a Review" button.
+                Fill out the form with your rating, title, and detailed review,
+                then click "Submit."
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+              <AccordionTrigger>
+                Can I edit or delete my review after posting it?
+              </AccordionTrigger>
+              <AccordionContent className="max-w-96">
+                Yes, you can edit or delete your review. Go to your profile,
+                find the review you want to modify, and click on the "Edit" or
+                "Delete" button. Make your changes or confirm the deletion.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+              <AccordionTrigger>
+                How can I filter reviews to find the most helpful ones?
+              </AccordionTrigger>
+              <AccordionContent className="max-w-96">
+                On the product page, you can use the filter options to sort
+                reviews by rating, date, or helpfulness. You can also use the
+                search bar within the reviews section to find specific keywords
+                or topics.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-4">
+              <AccordionTrigger>
+                How are reviews moderated for inappropriate content?
+              </AccordionTrigger>
+              <AccordionContent className="max-w-96">
+                Reviews are automatically scanned for inappropriate content
+                using AI moderation tools. Additionally, our moderation team
+                manually reviews flagged content to ensure compliance with our
+                guidelines. Inappropriate reviews are removed promptly.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+      </div>
+      <div className="flex justify-center items-center h-20 bg-[#333333]">
+        <p className="text-[#dbdbdb] text-xs">
+          &copy; All rights reserved. Made by Yuval Maderer, Elad Levy, Omer
+          Sidi
+        </p>
+      </div>
+      <div className="flex gap-[0.1rem] bg-[#333333]">
+        <div className="bg-[#242424] text-[#dbdbdb] w-full flex justify-center items-center h-20 text-xs">
+          <a href="#">FACEBOOK</a>
+        </div>
+        <div className="bg-[#242424] text-[#dbdbdb] w-full flex justify-center items-center h-20 text-xs">
+          <a href="#">TWITTER</a>
+        </div>
+        <div className="bg-[#242424] text-[#dbdbdb] w-full flex justify-center items-center h-20 text-xs">
+          <a href="#">GITHUB</a>
+        </div>
+        <div className="bg-[#242424] text-[#dbdbdb] w-full flex justify-center items-center h-20 text-xs">
+          <a href="#">LINKEDIN</a>
         </div>
       </div>
     </div>

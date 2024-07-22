@@ -1,3 +1,12 @@
+import {
+  Pagination as ShadcnPagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationEllipsis,
+} from "@/components/ui/pagination";
 interface PaginationProps {
   businessesPerPage: number;
   totalBusinesses: number;
@@ -12,28 +21,37 @@ const Pagination = ({
   currentPage,
 }: PaginationProps) => {
   const pageNumbers = [];
+  const totalPages = Math.ceil(totalBusinesses / businessesPerPage);
 
-  for (let i = 1; i <= Math.ceil(totalBusinesses / businessesPerPage); i++) {
+  for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
   }
 
   return (
-    <nav>
-      <ul className="flex justify-center">
+    <ShadcnPagination>
+      <PaginationPrevious
+        className="cursor-pointer"
+        onClick={() => currentPage > 1 && paginate(currentPage - 1)}
+      />
+      <PaginationContent>
         {pageNumbers.map((number) => (
-          <li key={number} className="mx-1">
-            <button
+          <PaginationItem key={number}>
+            <PaginationLink
+              className="cursor-pointer"
+              isActive={number === currentPage}
               onClick={() => paginate(number)}
-              className={`px-4 py-2 border rounded ${
-                number === currentPage ? "bg-gray-200" : "bg-white"
-              }`}
             >
               {number}
-            </button>
-          </li>
+            </PaginationLink>
+          </PaginationItem>
         ))}
-      </ul>
-    </nav>
+        {pageNumbers.length > 5 && <PaginationEllipsis />}
+      </PaginationContent>
+      <PaginationNext
+        className="cursor-pointer"
+        onClick={() => currentPage < totalPages && paginate(currentPage + 1)}
+      />
+    </ShadcnPagination>
   );
 };
 
