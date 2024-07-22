@@ -1,11 +1,10 @@
 import { Review as ReviewType } from "src/types";
 import StarRating from "./StarRanking";
 import { ThumbsUp } from "lucide-react";
-import { useAuth } from "@/providers/user.context";
+
 import api from "@/services/api.service";
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
-import { log } from "console";
 
 const socket = io("http://localhost:3000");
 interface ReviewProps {
@@ -42,7 +41,7 @@ function Review({ review }: ReviewProps) {
 
   async function toggleLike(reviewId: string): Promise<void> {
     try {
-      const { data } = await api.patch("/review/like", { reviewId });
+      await api.patch("/review/like", { reviewId });
       getStatus(review._id);
     } catch (err: any) {
       console.log(err.message);
