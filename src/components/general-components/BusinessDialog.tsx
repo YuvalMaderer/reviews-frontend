@@ -106,11 +106,13 @@ function BusinessDialog({
         <button className="absolute top-2 right-2" onClick={onClose}>
           X
         </button>
-        <h2 className="text-2xl font-bold mb-4">{currentBusiness.name}</h2>
-        <p>{currentBusiness.description}</p>
-        <div className="mt-2">
-          <StarRating stars={currentBusiness.stars} readOnly />
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-bold">{business.name}</h2>
+          <div className="mt-2">
+            <StarRating stars={currentBusiness.stars} readOnly />
+          </div>
         </div>
+        <p>{business.description}</p>
         <div className="mt-4">
           <div className="flex justify-between items-center">
             <h3 className="text-xl font-semibold">Reviews</h3>
@@ -131,7 +133,6 @@ function BusinessDialog({
             <BussinessReview key={review._id} review={review} />
           ))}
         </div>
-
         <Login isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
       </div>
     </div>
