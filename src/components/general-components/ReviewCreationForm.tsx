@@ -36,7 +36,7 @@ function ReviewForm({
         createdAt: new Date(),
       };
 
-      const response = await createReview(newReview as Review);
+      const response = await createReview(businessId);
       onReviewCreated(response.data);
       setContent("");
       setStars(0);
