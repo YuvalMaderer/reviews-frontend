@@ -6,9 +6,8 @@ import StarRating from "../components/general-components/StarRanking";
 import SearchForm from "../components/general-components/Search";
 import { useSearchParams } from "react-router-dom";
 import Pagination from "../components/general-components/Pagination";
+import Categories from "../components/general-components/Categories";
 import noResultsImage from "../images/upset-mag.webp";
-import { io } from "socket.io-client";
-const socket = io("http://localhost:3000");
 const categories = [
   "Food & Drink",
   "Electronics",
@@ -86,10 +85,11 @@ function BusinessPage() {
 
   return (
     <div className="bg-gray-100 py-4">
-      <SearchForm categories={categories} />
+      <SearchForm />
       <div className="flex px-52 p-4">
         <div className="w-[50%]">
           <h1>Categories</h1>
+          <Categories categories={categories} />
         </div>
         <div>
           {isLoading ? (

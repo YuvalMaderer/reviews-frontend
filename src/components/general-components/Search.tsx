@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { Input } from "../ui/input";
 import { Star } from "lucide-react";
 
-interface SearchFormProps {
+export interface SearchFormProps {
   categories: string[];
 }
 
@@ -14,10 +14,10 @@ const ratings = [
   { value: "4.5", label: "4.5+" },
 ];
 
-const SearchForm = ({ categories }: SearchFormProps) => {
+const SearchForm = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState(searchParams.get("name") || "");
-  const [category, setCategory] = useState(searchParams.get("category") || "");
+  // const [category, setCategory] = useState(searchParams.get("category") || "");
   const [minRating, setMinRating] = useState(
     searchParams.get("minRating") || ""
   );
@@ -26,13 +26,13 @@ const SearchForm = ({ categories }: SearchFormProps) => {
     const delayDebounceFn = setTimeout(() => {
       const params: { [key: string]: string } = {};
       if (searchTerm) params.name = searchTerm;
-      if (category) params.category = category;
+      // if (category) params.category = category;
       if (minRating) params.minRating = minRating;
       setSearchParams(params);
     }, 300); // 300ms debounce delay
 
     return () => clearTimeout(delayDebounceFn);
-  }, [searchTerm, category, minRating, setSearchParams]);
+  }, [searchTerm, minRating, setSearchParams]);
 
   return (
     <div className="flex flex-col lg:flex-row gap-4 my-4 px-24">
@@ -43,7 +43,7 @@ const SearchForm = ({ categories }: SearchFormProps) => {
         onChange={(e) => setSearchTerm(e.target.value)}
         className="p-2 border rounded"
       />
-      <select
+      {/* <select
         value={category}
         onChange={(e) => setCategory(e.target.value)}
         className="p-2 border rounded"
@@ -54,7 +54,7 @@ const SearchForm = ({ categories }: SearchFormProps) => {
             {cat}
           </option>
         ))}
-      </select>
+      </select> */}
       <div className="flex gap-2">
         {ratings.map((rating) => (
           <button
