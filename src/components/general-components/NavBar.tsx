@@ -28,7 +28,7 @@ const NavBar = () => {
     }`;
 
   return (
-    <nav className="bg-white flex justify-between items-center p-4 px-20">
+    <nav className="bg-white flex justify-between items-center py-4 px-24">
       <div className="flex items-center">
         <Link to="/">
           <img src={logo} alt="Logo" className="h-10" />
@@ -97,9 +97,11 @@ const NavBar = () => {
               <DropdownMenuContent>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link to="/profile">Profile</Link>
-                </DropdownMenuItem>
+                <Link to="/profile">
+                  <DropdownMenuItem className="cursor-pointer">
+                    Profile
+                  </DropdownMenuItem>
+                </Link>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={logout} className="cursor-pointer">
                   <div>Logout</div>
@@ -114,10 +116,16 @@ const NavBar = () => {
               <DropdownMenuContent>
                 <DropdownMenuLabel>Welcome</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => setIsLoginOpen(true)}>
+                <DropdownMenuItem
+                  onClick={() => setIsLoginOpen(true)}
+                  className="cursor-pointer"
+                >
                   Login
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setIsRegisterOpen(true)}>
+                <DropdownMenuItem
+                  onClick={() => setIsRegisterOpen(true)}
+                  className="cursor-pointer"
+                >
                   Register
                 </DropdownMenuItem>
               </DropdownMenuContent>

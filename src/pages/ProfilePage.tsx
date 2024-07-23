@@ -21,13 +21,29 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <h1 className="text-3xl font-bold text-gray-800 mb-4">
-        Welcome, {loggedInUser.fullName}!
-      </h1>
-      <p className="text-gray-600 mb-8 text-center">
-        Email: {loggedInUser.email}
-      </p>
+    <div className="relative h-screen">
+      <img
+        src="src/images/cc4f51f85f7374fbadac3f90f89a0d06.jpg"
+        alt="Background"
+        className="w-full h-full object-cover absolute top-0 left-0 blur-sm"
+      />
+      <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center">
+        <div className="flex justify-center items-center h-full relative z-10">
+          <div className="w-[800px] h-[450px] flex">
+            <div className="relative w-full h-full">
+              <div className="absolute inset-0 gradient-teal">
+                <div className="w-full h-full p-12 space-y-5">
+                  <h3 className="font-bold text-white">Profile</h3>
+                  <h1 className="font-bold text-white text-3xl ">
+                    Welcome, {loggedInUser.fullName}!
+                  </h1>
+                  <p className="text-white">Email: {loggedInUser.email}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
