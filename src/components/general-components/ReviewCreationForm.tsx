@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Review } from "src/types";
 import StarRating from "./StarRanking";
 import { Button } from "../ui/button";
