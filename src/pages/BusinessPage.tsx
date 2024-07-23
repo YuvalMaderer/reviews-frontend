@@ -8,40 +8,24 @@ import { useSearchParams } from "react-router-dom";
 import Pagination from "../components/general-components/Pagination";
 import noResultsImage from "../images/upset-mag.webp";
 import {
-  Binary,
-  BookOpen,
   Cable,
   Cat,
   Cross,
   Dumbbell,
   House,
-  HousePlug,
-  NotebookTabs,
-  PlaneTakeoff,
   Rows4,
   Sandwich,
   Shirt,
-  ShoppingBasket,
-  ShoppingCart,
-  Workflow,
 } from "lucide-react";
 const categories = [
   { name: "All Categories", icon: <Rows4 /> },
   { name: "Food & Drink", icon: <Sandwich /> },
   { name: "Electronics", icon: <Cable /> },
-  { name: "Books", icon: <BookOpen /> },
   { name: "Health & Fitness", icon: <Cross /> },
   { name: "Fashion", icon: <Shirt /> },
-  { name: "Automotive", icon: <Workflow /> },
   { name: "Pets", icon: <Cat /> },
-  { name: "Home Improvement", icon: <HousePlug /> },
   { name: "Sports & Outdoors", icon: <Dumbbell /> },
-  { name: "Beauty", icon: <ShoppingBasket /> },
   { name: "Home", icon: <House /> },
-  { name: "Travel", icon: <PlaneTakeoff /> },
-  { name: "Grocery", icon: <ShoppingCart /> },
-  { name: "Retail", icon: <NotebookTabs /> },
-  { name: "Tech", icon: <Binary /> },
 ];
 
 function BusinessPage() {
@@ -102,10 +86,9 @@ function BusinessPage() {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <div className="bg-gray-100 h-[135vh] py-4">
+    <div className="bg-gray-100 h-[150vh] py-4">
       <SearchForm categories={categories} />
       <div className="flex px-52 p-4">
-        <div className="w-[50%]"></div>
         <div>
           {isLoading ? (
             <div>Loading...</div>
@@ -126,14 +109,14 @@ function BusinessPage() {
               {businesses.map((business) => (
                 <div
                   key={business._id}
-                  className="max-w-[36rem] w-[36rem] h-36 max-h-36 shadow hover:shadow-2xl transition duration-300 ease-in-out cursor-pointer flex flex-col bg-gray-50"
+                  className="max-w-[70rem] w-[70rem] h-36 max-h-36 shadow hover:shadow-2xl transition duration-300 ease-in-out cursor-pointer flex flex-col bg-gray-50"
                   onClick={() => handleBusinessClick(business)}
                 >
                   <div className="flex">
                     <img
                       src={business.imageUrl}
                       alt={business.name}
-                      className="w-[200px] h-36 pr-6"
+                      className="w-[200px] h-36 mr-20"
                     />
                     <div className="pt-6">
                       <h2 className="font-bold">{business.name}</h2>
@@ -141,7 +124,7 @@ function BusinessPage() {
                         {business.category}
                       </div>
                       <div className="max-w-52">
-                        <p className="text-gray-500 text-xs">
+                        <p className="text-gray-500 text-xs ">
                           {business.description}
                         </p>
                       </div>

@@ -28,7 +28,7 @@ const Pagination = ({
   }
 
   return (
-    <ShadcnPagination className="absolute top-[62rem]">
+    <ShadcnPagination className="">
       <PaginationPrevious
         className="cursor-pointer"
         onClick={() => currentPage > 1 && paginate(currentPage - 1)}

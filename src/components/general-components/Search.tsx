@@ -37,15 +37,34 @@ const SearchForm = ({ categories }: SearchFormProps) => {
   }, [searchTerm, currentCategory, minRating, setSearchParams]);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-4 my-4 px-4 lg:px-24 xl:px-52">
-      <Input
-        type="text"
-        placeholder="Search by name..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="p-2 border rounded"
-      />
-      <div className="grid grid-cols-2 gap-1 absolute top-[17%] left-[15%] space-x-2">
+    <>
+      <div className="flex flex-col lg:flex-row gap-4 my-4 px-4 lg:px-24 xl:px-52">
+        <Input
+          type="text"
+          placeholder="Search by name..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="p-2 border rounded"
+        />
+        <div className="flex gap-2">
+          {ratings.map((rating) => (
+            <button
+              key={rating.value}
+              className={`p-2 border rounded ${
+                minRating === rating.value ? "bg-blue-200" : ""
+              }`}
+              onClick={() => setMinRating(rating.value)}
+            >
+              <span className=" flex items-center gap-2">
+                <Star className="h-4 w-4" />
+                {rating.label}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex justify-between gap-1 space-x-2">
         {categories.map((category) => {
           if (currentCategory === category.name) {
             return (
@@ -80,23 +99,7 @@ const SearchForm = ({ categories }: SearchFormProps) => {
           }
         })}
       </div>
-      <div className="flex gap-2">
-        {ratings.map((rating) => (
-          <button
-            key={rating.value}
-            className={`p-2 border rounded ${
-              minRating === rating.value ? "bg-blue-200" : ""
-            }`}
-            onClick={() => setMinRating(rating.value)}
-          >
-            <span className=" flex items-center gap-2">
-              <Star className="h-4 w-4" />
-              {rating.label}
-            </span>
-          </button>
-        ))}
-      </div>
-    </div>
+    </>
   );
 };
 
