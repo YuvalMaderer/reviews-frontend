@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Review } from "src/types";
-import StarRating from ".//StarRanking";
+import StarRating from "./StarRanking";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import { createReview } from "@/services/review.service";
+import { useToast } from "@/components/ui/use-toast";
 
 interface ReviewFormProps {
   businessId: string;
@@ -19,10 +20,15 @@ function ReviewForm({
   const [content, setContent] = useState("");
   const [stars, setStars] = useState(0);
   const [error, setError] = useState("");
+  const { toast } = useToast();
 
   const handleSubmit = async () => {
     if (!content || stars === 0) {
       setError("Please provide content and a star rating.");
+      toast({
+        description: "Please provide content and a star rating.",
+        variant: "destructive",
+      });
       return;
     }
 
@@ -40,8 +46,16 @@ function ReviewForm({
       onReviewCreated(response.data);
       setContent("");
       setStars(0);
+      toast({
+        description: "Review created successfully.",
+        variant: "default",
+      });
     } catch (error) {
       setError("Error creating review. Please try again.");
+      toast({
+        description: "Error creating review. Please try again.",
+        variant: "destructive",
+      });
       console.error(error);
     }
   };
