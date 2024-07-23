@@ -102,7 +102,7 @@ function BusinessPage() {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <div className="bg-gray-100 py-4">
+    <div className="bg-gray-100 h-[135vh] py-4">
       <SearchForm categories={categories} />
       <div className="flex px-52 p-4">
         <div className="w-[50%]"></div>
