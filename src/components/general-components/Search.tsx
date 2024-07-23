@@ -37,7 +37,7 @@ const SearchForm = ({ categories }: SearchFormProps) => {
   }, [searchTerm, currentCategory, minRating, setSearchParams]);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-4 my-4 px-24">
+    <div className="flex flex-col lg:flex-row gap-4 my-4 px-4 lg:px-24 xl:px-52">
       <Input
         type="text"
         placeholder="Search by name..."
@@ -45,7 +45,7 @@ const SearchForm = ({ categories }: SearchFormProps) => {
         onChange={(e) => setSearchTerm(e.target.value)}
         className="p-2 border rounded"
       />
-      <div className="grid grid-cols-2 absolute top-[24%] left-[15%] space-x-2">
+      <div className="grid grid-cols-2 gap-1 absolute top-[17%] left-[15%] space-x-2">
         {categories.map((category) => {
           if (currentCategory === category.name) {
             return (

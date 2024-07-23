@@ -7,16 +7,15 @@ module.exports = {
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
   ],
-  prefix: "",
   theme: {
     container: {
       center: true,
       padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
     },
     extend: {
+      screens: {
+        custom: "800px", // Custom breakpoint at 800px
+      },
       colors: {
         "red-violet": "#C71585",
         border: "hsl(var(--border))",
