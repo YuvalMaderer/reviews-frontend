@@ -35,7 +35,7 @@ const SearchForm = ({ categories }: SearchFormProps) => {
   }, [searchTerm, category, minRating, setSearchParams]);
 
   return (
-    <div className="flex gap-4 mb-4 mx-6">
+    <div className="flex flex-col lg:flex-row gap-4 mb-4 mx-6">
       <Input
         type="text"
         placeholder="Search by name..."
