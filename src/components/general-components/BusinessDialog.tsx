@@ -7,6 +7,8 @@ import { getReviews } from "@/services/review.service";
 import ReviewForm from "./ReviewCreationForm";
 import { useAuth } from "@/providers/user.context";
 import Login from "./Login";
+import io from "socket.io-client";
+const socket = io("http://localhost:3000");
 
 interface BusinessDialogProps {
   business: Business;
@@ -31,8 +33,8 @@ function BusinessDialog({
   useEffect(() => {
     async function fetchReviews() {
       try {
-        const response = await getReviews(business._id);
-        const reviews: Review[] = response.data.reviews;
+        const { data } = await getReviews(business._id);
+        const reviews: Review[] = data.reviews;
         setReviews(reviews);
       } catch (error) {
         console.error("Error fetching reviews:", error);
@@ -64,6 +66,14 @@ function BusinessDialog({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen, onClose]);
+
+  useEffect(() => {
+    socket.on("getReviews", (response) => {
+      if (response.businessId == business._id) {
+        setReviews(response.reviewTotal);
+      }
+    });
+  }, []);
 
   function handleAddReview() {
     if (!loggedInUser) {
