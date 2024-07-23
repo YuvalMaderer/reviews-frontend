@@ -134,8 +134,8 @@ function BusinessPage() {
                 >
                   <div className="flex">
                     <img
-                      src="https://picsum.photos/200/144"
-                      alt=""
+                      src={business.imageUrl}
+                      alt={business.name}
                       className="w-[200px] h-36 pr-6"
                     />
                     <div className="pt-6">
