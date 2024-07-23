@@ -124,11 +124,9 @@ function BusinessDialog({
         </div>
         <p>{business.description}</p>
         <div className="mt-4">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center mb-4">
             <h3 className="text-xl font-semibold">Reviews</h3>
-            <Button className="mt-4" onClick={handleAddReview}>
-              Add Review
-            </Button>
+            <Button onClick={handleAddReview}>Add Review</Button>
           </div>
           {isAddingReview && (
             <div className="mt-4">
