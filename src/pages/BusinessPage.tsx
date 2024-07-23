@@ -35,7 +35,7 @@ function BusinessPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [totalBusinesses, setTotalBusinesses] = useState(0);
-  const businessesPerPage = 10;
+  const businessesPerPage = 5;
 
   useEffect(() => {
     async function fetchBusinesses() {
@@ -83,46 +83,69 @@ function BusinessPage() {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <div className="m-16">
-      <h1 className="text-3xl font-bold my-4 text-center">Business Page</h1>
-      <SearchForm categories={categories} />
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <div className="grid grid-cols-1 gap-8 p-8 md:grid-cols-2">
-          {businesses.map((business) => (
-            <div
-              key={business._id}
-              className="p-6 border rounded-lg shadow cursor-pointer flex flex-col gap-2"
-              onClick={() => handleBusinessClick(business)}
-            >
-              <div className="flex justify-between">
-                <h2 className="text-xl font-semibold">{business.name}</h2>
-                <div>
-                  <StarRating stars={business.stars} readOnly />
-                </div>
+    <>
+      <div className=" bg-gray-100">
+        <SearchForm categories={categories} />
+        <div className="flex px-52">
+          <div className="w-[50%]">
+            <h1>Categories</h1>
+          </div>
+          <div>
+            {isLoading ? (
+              <div>Loading...</div>
+            ) : (
+              <div className="space-y-5">
+                {businesses.map((business) => (
+                  <div
+                    key={business._id}
+                    className="max-w-[36rem] w-[36rem] h-36 max-h-36 shadow hover:shadow-2xl transition duration-300 ease-in-out cursor-pointer flex flex-col bg-gray-50"
+                    onClick={() => handleBusinessClick(business)}
+                  >
+                    <div className="flex">
+                      <img
+                        src="https://picsum.photos/200/144"
+                        alt=""
+                        className="w-[200px] h-36 pr-6"
+                      />
+                      <div className="pt-6">
+                        <h2 className="font-bold">{business.name}</h2>
+
+                        <div className="text-xs text-gray-400 pb-2">
+                          {business.category}
+                        </div>
+
+                        <div className="max-w-52">
+                          <p className="text-gray-500 text-xs">
+                            {business.description}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex">
+                        <StarRating stars={business.stars} readOnly />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div className="text-sm text-gray-500">{business.category}</div>
-              <p className="text-gray-700">{business.description}</p>
-            </div>
-          ))}
+            )}
+          </div>
         </div>
-      )}
-      <Pagination
-        businessesPerPage={businessesPerPage}
-        totalBusinesses={totalBusinesses}
-        paginate={paginate}
-        currentPage={currentPage}
-      />
-      {selectedBusiness && (
-        <BusinessDialog
-          business={selectedBusiness}
-          isOpen={isDialogOpen}
-          onClose={handleCloseDialog}
-          onUpdateBusiness={handleUpdateBusiness}
+        <Pagination
+          businessesPerPage={businessesPerPage}
+          totalBusinesses={totalBusinesses}
+          paginate={paginate}
+          currentPage={currentPage}
         />
-      )}
-    </div>
+        {selectedBusiness && (
+          <BusinessDialog
+            business={selectedBusiness}
+            isOpen={isDialogOpen}
+            onClose={handleCloseDialog}
+            onUpdateBusiness={handleUpdateBusiness}
+          />
+        )}
+      </div>
+    </>
   );
 }
 
