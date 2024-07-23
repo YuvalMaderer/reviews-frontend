@@ -6,7 +6,6 @@ import StarRating from "../components/general-components/StarRanking";
 import SearchForm from "../components/general-components/Search";
 import { useSearchParams } from "react-router-dom";
 import Pagination from "../components/general-components/Pagination";
-import Categories from "../components/general-components/Categories";
 import noResultsImage from "../images/upset-mag.webp";
 import {
   Binary,
@@ -104,11 +103,9 @@ function BusinessPage() {
 
   return (
     <div className="bg-gray-100 py-4">
-      <SearchForm />
+      <SearchForm categories={categories} />
       <div className="flex px-52 p-4">
-        <div className="w-[50%]">
-          <Categories categories={categories} />
-        </div>
+        <div className="w-[50%]"></div>
         <div>
           {isLoading ? (
             <div>Loading...</div>

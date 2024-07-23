@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { Input } from "../ui/input";
 import { Star } from "lucide-react";
 
-export interface SearchFormProps {
+interface SearchFormProps {
   categories: object[];
 }
 
@@ -14,10 +14,12 @@ const ratings = [
   { value: "4.5", label: "4.5+" },
 ];
 
-const SearchForm = () => {
+const SearchForm = ({ categories }: SearchFormProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState(searchParams.get("name") || "");
-  // const [category, setCategory] = useState(searchParams.get("category") || "");
+  const [currentCategory, setCurrentCategory] = useState(
+    searchParams.get("category") || ""
+  );
   const [minRating, setMinRating] = useState(
     searchParams.get("minRating") || ""
   );
@@ -26,13 +28,13 @@ const SearchForm = () => {
     const delayDebounceFn = setTimeout(() => {
       const params: { [key: string]: string } = {};
       if (searchTerm) params.name = searchTerm;
-      // if (category) params.category = category;
+      if (currentCategory) params.category = currentCategory;
       if (minRating) params.minRating = minRating;
       setSearchParams(params);
     }, 300); // 300ms debounce delay
 
     return () => clearTimeout(delayDebounceFn);
-  }, [searchTerm, minRating, setSearchParams]);
+  }, [searchTerm, currentCategory, minRating, setSearchParams]);
 
   return (
     <div className="flex flex-col lg:flex-row gap-4 my-4 px-24">
@@ -43,18 +45,41 @@ const SearchForm = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
         className="p-2 border rounded"
       />
-      {/* <select
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-        className="p-2 border rounded"
-      >
-        <option value="">All Categories</option>
-        {categories.map((cat) => (
-          <option key={cat} value={cat}>
-            {cat}
-          </option>
-        ))}
-      </select> */}
+      <div className="grid grid-cols-2 absolute top-[24%] left-[15%] space-x-2">
+        {categories.map((category) => {
+          if (currentCategory === category.name) {
+            return (
+              <button
+                type="button"
+                className="mb-4 p-4 w-52 h-20 shadow-2xl transition duration-300 ease-in-out cursor-pointer flex flex-col bg-white justify-center items-center"
+                onClick={() =>
+                  setCurrentCategory(
+                    category.name === "All Categories" ? "" : category.name
+                  )
+                }
+              >
+                <h1 className="mb-2">{category.name}</h1>
+                <div>{category.icon}</div>
+              </button>
+            );
+          } else {
+            return (
+              <button
+                type="button"
+                className="mb-4 border border-gray-200 p-4 w-52 h-20 hover:shadow-2xl transition duration-300 ease-in-out cursor-pointer flex flex-col bg-gray-50 justify-center items-center"
+                onClick={() =>
+                  setCurrentCategory(
+                    category.name === "All Categories" ? "" : category.name
+                  )
+                }
+              >
+                <h1 className="text-gray-400 mb-2">{category.name}</h1>
+                <div className="text-gray-400">{category.icon}</div>
+              </button>
+            );
+          }
+        })}
+      </div>
       <div className="flex gap-2">
         {ratings.map((rating) => (
           <button
