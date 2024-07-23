@@ -6,10 +6,12 @@ import Navbar from "./components/general-components/NavBar";
 import ProfilePage from "./pages/ProfilePage";
 import ContactUsPage from "./pages/ContactUsPage";
 import AddBusinessForm from "./components/general-components/AddBusinessForm";
+import { Toaster } from "./components/ui/toaster";
+import { AuthProvider } from "./providers/user.context";
 
 const App: React.FC = () => {
   return (
-    <>
+    <AuthProvider>
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -19,8 +21,8 @@ const App: React.FC = () => {
         <Route path="/add" element={<AddBusinessForm />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </>
+      <Toaster />
+    </AuthProvider>
   );
 };
-
 export default App;

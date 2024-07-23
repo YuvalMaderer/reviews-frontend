@@ -9,6 +9,7 @@ import {
   ReactNode,
   FC,
 } from "react";
+import { useToast } from "@/components/ui/use-toast";
 
 interface User {
   fullName: string;
@@ -52,6 +53,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     undefined
   );
   const [token, setToken] = useLocalStorage<string | null>("token", null);
+  const { toast } = useToast();
 
   useEffect(() => {
     if (!token) {
@@ -83,6 +85,9 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const logout = () => {
     setToken(null);
     setLoggedInUser(null);
+    toast({
+      description: "You have been logged out.",
+    });
   };
 
   const login = async (userData: LoginData): Promise<LoginResponse> => {
@@ -90,9 +95,16 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       const response = await api.post("/auth/login", userData);
       setToken(response.data.token);
       setLoggedInUser(response.data.user); // Ensure the user is set correctly
+      toast({
+        description: "Login successful.",
+      });
       return response.data;
     } catch (error: unknown) {
       console.error("Error logging in:", error);
+      toast({
+        description: "Error logging in, email or password incorrect.",
+        variant: "destructive",
+      });
       throw error;
     }
   };
@@ -100,26 +112,44 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const register = async (userData: RegisterData): Promise<void> => {
     try {
       await api.post("/auth/register", userData);
+      toast({
+        description: "Registration successful.",
+      });
     } catch (error: unknown) {
       console.error("Error registering:", error);
+      toast({
+        description: "Error registering.",
+        variant: "destructive",
+      });
       throw error;
     }
   };
+
   const handleGoogleSuccess = async (credentialResponse: {
     credential?: string;
   }): Promise<void> => {
     const { credential } = credentialResponse;
     if (!credential) {
       console.error("Credential is undefined");
+      toast({
+        description: "Google login failed: Credential is undefined.",
+        variant: "destructive",
+      });
       return;
     }
     try {
       const response = await api.post("/auth/google", { credential });
       setToken(response.data.token);
       setLoggedInUser(response.data.user);
-      console.log("Logged in with Google");
+      toast({
+        description: "Logged in with Google.",
+      });
     } catch (error: unknown) {
       console.error("Google login failed:", error);
+      toast({
+        description: "Google login failed.",
+        variant: "destructive",
+      });
     }
   };
 
