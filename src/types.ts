@@ -4,6 +4,7 @@ export interface Business {
   name: string;
   description: string;
   stars: number;
+  imageUrl: string;
 }
 
 export interface Review {

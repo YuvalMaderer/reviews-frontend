@@ -10,8 +10,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/providers/user.context";
 import Register from "./Register";
-import { useState } from "react";
+
 import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
+import { useState } from "react";
 
 interface LoginProps {
   isOpen: boolean;

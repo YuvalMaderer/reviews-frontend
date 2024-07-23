@@ -5,6 +5,7 @@ import { ThumbsUp } from "lucide-react";
 import api from "@/services/api.service";
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
+import { useToast } from "@/components/ui/use-toast";
 
 const socket = io("http://localhost:3000");
 interface ReviewProps {
@@ -14,6 +15,8 @@ interface ReviewProps {
 function Review({ review }: ReviewProps) {
   const [like, setLike] = useState(false);
   const [likeCount, setLikeCount] = useState(review.likes.length);
+  const { toast } = useToast();
+
   async function getStatus(reviewId: string) {
     try {
       const { data } = await api.get("/review/like/" + reviewId);
@@ -45,6 +48,10 @@ function Review({ review }: ReviewProps) {
       getStatus(review._id);
     } catch (err: any) {
       console.log(err.message);
+      toast({
+        description: "Can not like reviews as a guest, please log in.",
+        variant: "destructive",
+      });
     }
   }
 
