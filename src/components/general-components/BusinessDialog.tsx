@@ -29,6 +29,8 @@ function BusinessDialog({
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [currentBusiness, setCurrentBusiness] = useState<Business>(business);
+  const [avg, setAvg] = useState<any>(currentBusiness.stars);
+  console.log(avg);
 
   useEffect(() => {
     async function fetchReviews() {
@@ -43,6 +45,16 @@ function BusinessDialog({
 
     if (isOpen) {
       fetchReviews();
+      socket.on("getReviews", (response) => {
+        if (response.businessId == business._id) {
+          setReviews(response.reviewTotal);
+        }
+      });
+      socket.on("newAvg", (response) => {
+        if (response.businessId == business._id) {
+          setAvg(response.newAvg);
+        }
+      });
     }
   }, [isOpen, business._id]);
 
@@ -67,13 +79,7 @@ function BusinessDialog({
     };
   }, [isOpen, onClose]);
 
-  useEffect(() => {
-    socket.on("getReviews", (response) => {
-      if (response.businessId == business._id) {
-        setReviews(response.reviewTotal);
-      }
-    });
-  }, []);
+  useEffect(() => {}, []);
 
   function handleAddReview() {
     if (!loggedInUser) {
@@ -119,7 +125,8 @@ function BusinessDialog({
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold">{business.name}</h2>
           <div className="mt-2">
-            <StarRating stars={currentBusiness.stars} readOnly />
+            <StarRating stars={parseFloat(avg)} readOnly />
+            {`(${reviews.length} reviews)`}
           </div>
         </div>
         <p>{business.description}</p>

@@ -11,7 +11,7 @@ function StarRating({ stars, onChange, readOnly = false }: StarRatingProps) {
 
   const displayStars = hoveredStars !== null ? hoveredStars : stars;
   const fullStars = Math.floor(displayStars);
-  const halfStar = displayStars % 1 !== 0 ? 1 : 0;
+  const halfStar = displayStars % 1 !== 0 && displayStars % 1 >= 0.5 ? 1 : 0;
   const emptyStars = 5 - fullStars - halfStar;
 
   const handleStarClick = (index: number) => {
@@ -31,7 +31,6 @@ function StarRating({ stars, onChange, readOnly = false }: StarRatingProps) {
       setHoveredStars(null);
     }
   };
-
   return (
     <div className="flex items-center">
       {Array.from({ length: fullStars }).map((_, index) => (

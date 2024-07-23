@@ -7,7 +7,8 @@ import SearchForm from "../components/general-components/Search";
 import { useSearchParams } from "react-router-dom";
 import Pagination from "../components/general-components/Pagination";
 import noResultsImage from "../images/upset-mag.webp";
-
+import { io } from "socket.io-client";
+const socket = io("http://localhost:3000");
 const categories = [
   "Food & Drink",
   "Electronics",
