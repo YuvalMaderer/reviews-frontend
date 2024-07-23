@@ -28,22 +28,28 @@ const NavBar = () => {
       <div className="flex space-x-4">
         <a
           href="/"
-          className="hover:text-red-violet hover:border-b-2 border-red-violet font-bold transition duration-300 ease-in-out"
+          className="hover:text-teal-600  font-bold transition duration-300 ease-in-out"
         >
           Home
         </a>
         <a
           href="business"
-          className="hover:text-red-violet hover:border-b-2 border-red-violet font-bold transition duration-300 ease-in-out"
+          className="hover:text-teal-600  font-bold transition duration-300 ease-in-out"
         >
           Business
+        </a>
+        <a
+          href="contact"
+          className="hover:text-teal-600  font-bold transition duration-300 ease-in-out"
+        >
+          Contact Us
         </a>
         <Login />
         <Register />
       </div>
       <div className="flex space-x-4">
         <a
-          className="hover:text-red-violet transition duration-300 ease-in-out"
+          className="hover:text-teal-600 transition duration-300 ease-in-out"
           href="https://facebook.com"
           target="_blank"
           rel="noopener noreferrer"
@@ -54,12 +60,12 @@ const NavBar = () => {
           href="https://github.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-red-violet transition duration-300 ease-in-out"
+          className="hover:text-teal-600 transition duration-300 ease-in-out"
         >
           <Github />
         </a>
         <a
-          className="hover:text-red-violet transition duration-300 ease-in-out"
+          className="hover:text-teal-600 transition duration-300 ease-in-out"
           href="https://linkedin.com"
           target="_blank"
           rel="noopener noreferrer"
