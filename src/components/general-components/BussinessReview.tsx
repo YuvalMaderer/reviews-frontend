@@ -18,16 +18,9 @@ function Review({ review }: ReviewProps) {
   const { toast } = useToast();
 
   async function getStatus(reviewId: string) {
-    try {
-      const { data } = await api.get("/review/like/" + reviewId);
-      const { liked } = data;
-      setLike(liked);
-    } catch (err: any) {
-      toast({
-        description: "Error loading likes.",
-        variant: "destructive",
-      });
-    }
+    const { data } = await api.get("/review/like/" + reviewId);
+    const { liked } = data;
+    setLike(liked);
   }
 
   useEffect(() => {
