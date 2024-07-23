@@ -8,22 +8,39 @@ import { useSearchParams } from "react-router-dom";
 import Pagination from "../components/general-components/Pagination";
 import Categories from "../components/general-components/Categories";
 import noResultsImage from "../images/upset-mag.webp";
+import {
+  Binary,
+  BookOpen,
+  Cable,
+  Cat,
+  Cross,
+  Dumbbell,
+  House,
+  HousePlug,
+  NotebookTabs,
+  PlaneTakeoff,
+  Sandwich,
+  Shirt,
+  ShoppingBasket,
+  ShoppingCart,
+  Workflow,
+} from "lucide-react";
 const categories = [
-  "Food & Drink",
-  "Electronics",
-  "Books",
-  "Health & Fitness",
-  "Fashion",
-  "Automotive",
-  "Pets",
-  "Home Improvement",
-  "Sports & Outdoors",
-  "Beauty",
-  "Home",
-  "Travel",
-  "Grocery",
-  "Retail",
-  "Tech",
+  { name: "Food & Drink", icon: <Sandwich /> },
+  { name: "Electronics", icon: <Cable /> },
+  { name: "Books", icon: <BookOpen /> },
+  { name: "Health & Fitness", icon: <Cross /> },
+  { name: "Fashion", icon: <Shirt /> },
+  { name: "Automotive", icon: <Workflow /> },
+  { name: "Pets", icon: <Cat /> },
+  { name: "Home Improvement", icon: <HousePlug /> },
+  { name: "Sports & Outdoors", icon: <Dumbbell /> },
+  { name: "Beauty", icon: <ShoppingBasket /> },
+  { name: "Home", icon: <House /> },
+  { name: "Travel", icon: <PlaneTakeoff /> },
+  { name: "Grocery", icon: <ShoppingCart /> },
+  { name: "Retail", icon: <NotebookTabs /> },
+  { name: "Tech", icon: <Binary /> },
 ];
 
 function BusinessPage() {
@@ -88,7 +105,6 @@ function BusinessPage() {
       <SearchForm />
       <div className="flex px-52 p-4">
         <div className="w-[50%]">
-          <h1>Categories</h1>
           <Categories categories={categories} />
         </div>
         <div>

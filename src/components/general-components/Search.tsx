@@ -4,7 +4,7 @@ import { Input } from "../ui/input";
 import { Star } from "lucide-react";
 
 export interface SearchFormProps {
-  categories: string[];
+  categories: object[];
 }
 
 const ratings = [
