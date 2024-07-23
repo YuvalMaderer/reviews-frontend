@@ -41,9 +41,13 @@ const NavBar = () => {
         <Link to="/business" className={getLinkClass("/business")}>
           Business
         </Link>
+        <Link to="/add" className={getLinkClass("/add")}>
+          Add Business
+        </Link>
         <Link to="/contact" className={getLinkClass("/contact")}>
           Contact Us
         </Link>
+
         <Login
           isOpen={false}
           onClose={function (): void {
