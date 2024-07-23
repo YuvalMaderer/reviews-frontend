@@ -30,7 +30,6 @@ function BusinessDialog({
   const [reviews, setReviews] = useState<Review[]>([]);
   const [currentBusiness, setCurrentBusiness] = useState<Business>(business);
   const [avg, setAvg] = useState<any>(currentBusiness.stars);
-  console.log(avg);
 
   useEffect(() => {
     async function fetchReviews() {
@@ -123,11 +122,13 @@ function BusinessDialog({
           X
         </button>
         <div className="flex justify-between items-center mb-4">
-          <img src={business.imageUrl} alt={business.name} />
-          <h2 className="text-2xl font-bold">{business.name}</h2>
-          <div className="mt-2">
-            <StarRating stars={parseFloat(avg)} readOnly />
-            {`(${reviews.length} reviews)`}
+          <div className="">
+            <img src={business.imageUrl} alt={business.name} />
+            <h2 className="text-2xl font-bold">{business.name}</h2>
+            <div className="mt-2">
+              {`(${reviews.length} reviews)`}{" "}
+              <StarRating stars={parseFloat(avg)} readOnly />{" "}
+            </div>{" "}
           </div>
         </div>
         <p>{business.description}</p>
