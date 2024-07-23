@@ -87,6 +87,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     setLoggedInUser(null);
     toast({
       description: "You have been logged out.",
+      variant: "warning",
     });
   };
 
@@ -97,6 +98,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       setLoggedInUser(response.data.user); // Ensure the user is set correctly
       toast({
         description: "Login successful.",
+        variant: "success",
       });
       return response.data;
     } catch (error: unknown) {
@@ -114,6 +116,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       await api.post("/auth/register", userData);
       toast({
         description: "Registration successful.",
+        variant: "success",
       });
     } catch (error: unknown) {
       console.error("Error registering:", error);
@@ -143,6 +146,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       setLoggedInUser(response.data.user);
       toast({
         description: "Logged in with Google.",
+        variant: "success",
       });
     } catch (error: unknown) {
       console.error("Google login failed:", error);
