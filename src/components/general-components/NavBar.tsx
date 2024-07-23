@@ -12,42 +12,52 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "../ui/button";
+import logo from "@/images/logo.png";
 
 const NavBar = () => {
   const { loggedInUser, logout } = useAuth();
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const location = useLocation();
+
+  const getLinkClass = (path: string) =>
+    `hover:text-teal-600 text-lg font-bold transition duration-300 ease-in-out ${
+      location.pathname === path ? "text-teal-600" : ""
+    }`;
 
   return (
-    <nav className="bg-white flex justify-between items-center p-4 px-40">
+    <nav className="bg-white flex justify-between items-center p-4 px-20">
       <div className="flex items-center">
-        <img src="/path-to-logo.png" alt="Logo" className="h-10" />
+        <Link to="/">
+          <img src={logo} alt="Logo" className="h-10" />
+        </Link>
       </div>
       <div className="flex space-x-4">
-        <a
-          href="/"
-          className="hover:text-teal-600  font-bold transition duration-300 ease-in-out"
-        >
+        <Link to="/" className={getLinkClass("/")}>
           Home
-        </a>
-        <a
-          href="business"
-          className="hover:text-teal-600  font-bold transition duration-300 ease-in-out"
-        >
+        </Link>
+        <Link to="/business" className={getLinkClass("/business")}>
           Business
-        </a>
-        <a
-          href="contact"
-          className="hover:text-teal-600  font-bold transition duration-300 ease-in-out"
-        >
+        </Link>
+        <Link to="/contact" className={getLinkClass("/contact")}>
           Contact Us
-        </a>
-        <Login />
-        <Register />
+        </Link>
+        <Login
+          isOpen={false}
+          onClose={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
+        <Register
+          isOpen={false}
+          onClose={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
       </div>
-      <div className="flex space-x-4">
+      <div className="flex space-x-4 items-center">
         <a
           className="hover:text-teal-600 transition duration-300 ease-in-out"
           href="https://facebook.com"
@@ -77,7 +87,7 @@ const NavBar = () => {
           {loggedInUser ? (
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <Avatar className="h-8 w-8">
+                <Avatar className="h-10 w-10">
                   <AvatarImage />
                   <AvatarFallback>
                     {loggedInUser.fullName[0].toUpperCase()}
