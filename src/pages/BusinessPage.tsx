@@ -19,6 +19,7 @@ import {
   HousePlug,
   NotebookTabs,
   PlaneTakeoff,
+  Rows4,
   Sandwich,
   Shirt,
   ShoppingBasket,
@@ -26,6 +27,7 @@ import {
   Workflow,
 } from "lucide-react";
 const categories = [
+  { name: "All Categories", icon: <Rows4 /> },
   { name: "Food & Drink", icon: <Sandwich /> },
   { name: "Electronics", icon: <Cable /> },
   { name: "Books", icon: <BookOpen /> },

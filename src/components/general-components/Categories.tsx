@@ -4,7 +4,7 @@ import { SearchFormProps } from "./Search";
 
 const SearchForm = ({ categories }: SearchFormProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [currentCategory, setcurrentCategory] = useState(
+  const [currentCategory, setCurrentCategory] = useState(
     searchParams.get("category") || ""
   );
 
@@ -26,9 +26,13 @@ const SearchForm = ({ categories }: SearchFormProps) => {
             <button
               type="button"
               className="mb-4 p-4 w-52 h-20 shadow-2xl transition duration-300 ease-in-out cursor-pointer flex flex-col bg-white justify-center items-center"
-              onClick={() => setcurrentCategory(category.name)}
+              onClick={() =>
+                setCurrentCategory(
+                  category.name === "All Categories" ? "" : category.name
+                )
+              }
             >
-              <h1>{category.name}</h1>
+              <h1 className="mb-2">{category.name}</h1>
               <div>{category.icon}</div>
             </button>
           );
@@ -37,7 +41,11 @@ const SearchForm = ({ categories }: SearchFormProps) => {
             <button
               type="button"
               className="mb-4 border border-gray-200 p-4 w-52 h-20 hover:shadow-2xl transition duration-300 ease-in-out cursor-pointer flex flex-col bg-gray-50 justify-center items-center"
-              onClick={() => setcurrentCategory(category.name)}
+              onClick={() =>
+                setCurrentCategory(
+                  category.name === "All Categories" ? "" : category.name
+                )
+              }
             >
               <h1 className="text-gray-400 mb-2">{category.name}</h1>
               <div className="text-gray-400">{category.icon}</div>
