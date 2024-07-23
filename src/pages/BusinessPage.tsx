@@ -6,6 +6,25 @@ import StarRating from "../components/general-components/StarRanking";
 import SearchForm from "../components/general-components/Search";
 import { useSearchParams } from "react-router-dom";
 import Pagination from "../components/general-components/Pagination";
+
+const categories = [
+  "Food & Drink",
+  "Electronics",
+  "Books",
+  "Health & Fitness",
+  "Fashion",
+  "Automotive",
+  "Pets",
+  "Home Improvement",
+  "Sports & Outdoors",
+  "Beauty",
+  "Home",
+  "Travel",
+  "Grocery",
+  "Retail",
+  "Tech",
+];
+
 function BusinessPage() {
   const [businesses, setBusinesses] = useState<Business[]>([]);
   const [selectedBusiness, setSelectedBusiness] = useState<Business | null>(
@@ -60,10 +79,6 @@ function BusinessPage() {
       )
     );
   }
-
-  const categories = Array.from(
-    new Set(businesses.map((business) => business.category))
-  );
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 

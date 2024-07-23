@@ -1,8 +1,12 @@
 import api from "./api.service";
 import { Review } from "../types";
 
+interface GetReviewsResponse {
+  reviews: Review[];
+}
+
 export function getReviews(businessId: string) {
-  return api.get<Review[]>(`/review/${businessId}`);
+  return api.get<GetReviewsResponse>(`/review/${businessId}`);
 }
 
 export function createReview(businessId: string, review: Partial<Review>) {
