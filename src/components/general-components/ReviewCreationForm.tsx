@@ -27,7 +27,7 @@ function ReviewForm({
       setError("Please provide content and a star rating.");
       toast({
         description: "Please provide content and a star rating.",
-        variant: "destructive",
+        variant: "warning",
       });
       return;
     }
@@ -48,7 +48,7 @@ function ReviewForm({
       setStars(0);
       toast({
         description: "Review created successfully.",
-        variant: "default",
+        variant: "success",
       });
     } catch (error) {
       setError("Error creating review. Please try again.");

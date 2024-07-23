@@ -23,7 +23,10 @@ function Review({ review }: ReviewProps) {
       const { liked } = data;
       setLike(liked);
     } catch (err: any) {
-      console.log(err);
+      toast({
+        description: "Error loading likes.",
+        variant: "destructive",
+      });
     }
   }
 
@@ -47,7 +50,6 @@ function Review({ review }: ReviewProps) {
       await api.patch("/review/like", { reviewId });
       getStatus(review._id);
     } catch (err: any) {
-      console.log(err.message);
       toast({
         description: "Can not like reviews as a guest, please log in.",
         variant: "destructive",
