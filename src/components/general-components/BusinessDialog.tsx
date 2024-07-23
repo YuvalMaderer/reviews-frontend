@@ -34,8 +34,8 @@ function BusinessDialog({
     async function fetchReviews() {
       try {
         const { data } = await getReviews(business._id);
-        const reviews: Review[] = data.reviews;
-        setReviews(reviews);
+        const fetchedReviews: Review[] = data.reviews;
+        setReviews(fetchedReviews);
       } catch (error) {
         console.error("Error fetching reviews:", error);
       }
