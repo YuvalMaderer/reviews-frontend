@@ -3,7 +3,7 @@ import { Review } from "src/types";
 import StarRating from "./StarRanking";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
-import { createReview } from "@/services/review.service";
+import { createAnonyReview, createReview } from "@/services/review.service";
 import { useToast } from "@/components/ui/use-toast";
 
 interface ReviewFormProps {
@@ -20,6 +20,7 @@ function ReviewForm({
   const [content, setContent] = useState("");
   const [stars, setStars] = useState(0);
   const [error, setError] = useState("");
+  const [isAnony, setIsAnony] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async () => {
@@ -41,8 +42,13 @@ function ReviewForm({
         likes: [],
         createdAt: new Date(),
       };
+      let response;
+      if (isAnony) {
+        response = await createAnonyReview(businessId, newReview);
+      } else {
+        response = await createReview(businessId, newReview);
+      }
 
-      const response = await createReview(businessId, newReview);
       onReviewCreated(response.data);
       setContent("");
       setStars(0);
@@ -63,6 +69,13 @@ function ReviewForm({
   return (
     <div className="p-4 border rounded-lg shadow mb-4">
       <h3 className="text-xl font-semibold mb-2">New Review</h3>
+      <input
+        className=" mr-1 my-2"
+        type="checkbox"
+        onChange={() => setIsAnony(!isAnony)}
+        checked={isAnony}
+      />
+      <label className=" text-center self-center">Post Anonymous</label>
       {error && <p className="text-red-500 mb-2">{error}</p>}
       <Textarea
         className="mb-2"
@@ -71,7 +84,7 @@ function ReviewForm({
         onChange={(e) => setContent(e.target.value)}
       />
       <div className="mb-2">
-        <StarRating stars={stars} onChange={setStars} />
+        <StarRating stars={stars} onChange={setStars} />{" "}
       </div>
       <div className="flex justify-end space-x-2">
         <Button variant="secondary" onClick={onCancel}>
