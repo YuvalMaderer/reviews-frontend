@@ -15,6 +15,7 @@ interface ReviewProps {
 function Review({ review }: ReviewProps) {
   const [like, setLike] = useState(false);
   const [likeCount, setLikeCount] = useState(review.likes.length);
+
   const { toast } = useToast();
 
   async function getStatus(reviewId: string) {

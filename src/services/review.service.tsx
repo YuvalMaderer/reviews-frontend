@@ -8,7 +8,9 @@ interface GetReviewsResponse {
 export function getReviews(businessId: string) {
   return api.get<GetReviewsResponse>(`/review/${businessId}`);
 }
-
+export function createAnonyReview(businessId: string, review: Partial<Review>) {
+  return api.post<Review>(`/review/anony/${businessId}`, review);
+}
 export function createReview(businessId: string, review: Partial<Review>) {
   return api.post<Review>(`/review/${businessId}`, review);
 }
