@@ -3,12 +3,13 @@ import api from "@/services/api.service";
 import { useAuth } from "@/providers/user.context";
 import Login from "./Login";
 import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
 
 function AddBusinessForm() {
   const { toast } = useToast();
   const { loggedInUser } = useAuth();
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-
+  const nav = useNavigate();
   async function createBusiness(ev: React.FormEvent<HTMLFormElement>) {
     ev.preventDefault();
     if (!loggedInUser) {
@@ -30,6 +31,7 @@ function AddBusinessForm() {
         description: "Business Created Successfully",
         variant: "success",
       });
+      nav("/business");
     } catch (error) {
       toast({
         description: "Error Creating Business. Please try again.",
